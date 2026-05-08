@@ -48,6 +48,7 @@ const ManagerDashboard = () => {
       consumption: parseFloat(item.total_usage_m3 || 0),
       revenue: parseFloat(item.revenue || item.projected_revenue || 0),
       bills: parseInt(item.bills_generated || item.total_bills || 0)
+    };
   }).reverse();
 
   const revenueData = [
