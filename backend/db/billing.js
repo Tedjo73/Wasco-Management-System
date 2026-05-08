@@ -4,7 +4,7 @@ require('dotenv').config();
 const billingPool = mysql.createPool({
   host: process.env.MYSQL_HOST || 'localhost',
   port: parseInt(process.env.MYSQL_PORT) || 3306,
-  database: 'wasco_billing',
+  database: process.env.MYSQL_DATABASE || 'wasco_billing',
   user: process.env.MYSQL_USER || 'root',
   password: process.env.MYSQL_PASSWORD || '0000',
   waitForConnections: true,

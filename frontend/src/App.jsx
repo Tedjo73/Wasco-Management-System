@@ -27,7 +27,7 @@ import ManagerDashboard from './pages/Manager/ManagerDashboard';
 export const AuthContext = createContext(null);
 export const useAuth = () => useContext(AuthContext);
 
-axios.defaults.baseURL = 'http://localhost:5000/api';
+axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 axios.defaults.withCredentials = true;
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
