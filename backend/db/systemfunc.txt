@@ -1,0 +1,43 @@
+Yes! The system we have built **perfectly aligns** with the requirements outlined in your project assignment. In fact, it hits almost every single mark on the rubric. 
+
+Here is a breakdown of how the current WASCO application fulfills your requirements so you know exactly how to defend it in your presentation and report:
+
+### 1. Database & Distributed Architecture (10 Marks)
+* **Requirement:** Distribute across at least two different databases / Heterogeneous database management systems.
+* **How we did it:** We built a true distributed application API. We have exactly two databases: `wasco_core` (handling User, Customer, District, and Leakage data) and `wasco_billing` (handling Billing Rates, Bills, and Payments). The Node.js server acts as the integration layer between these two separated databases. 
+
+### 2. Basic Entities & Tables
+* **Requirement:** Customers, Billing Rates, Usage, Bills. *(Note: Your rubric says "Electricity Usage" under item 3, which is likely a typo by your lecturer since the project is Water Billing!)*
+* **How we did it:** We created `customers`, `billing_rates` (tiers, min/max usage, cost), `bills` (which tracks previous and current water meter readings and total consumption in $m^3$), and `payments`. We even added `districts` and `leakage_reports` as extra entities (which your rubric welcomes).
+
+### 3. SQL Queries / Backend Logic (10 Marks)
+* **Requirement:** Calculate bills, track payment history, find outstanding balances, generate usage reports.
+* **How we did it:**
+    * **Calculations:** Our `backend/routes/bills.js` dynamically pulls the tier blocks from the `billing_rates` table and explicitly calculates the cost based strictly on the $m^3$ consumed by the customer. 
+    * **Payment History:** The `PaymentHistory.jsx` and `CustomerPortal.jsx` fetch advanced joint SQL queries that sum outstanding balances and pull recent payments.
+    * **Reports/Analytics:** The `ManagerDashboard` natively queries aggregated SQL data to group customers by district, calculate total revenue vs. outstanding debt, and maps consumption trends over time safely.
+
+### 4. Advanced Features & Security
+* **Requirement:** Secure user accounts, login functionality, embedded SQL, consider payment APIs.
+* **How we did it:** The system uses true **JWT (JSON Web Tokens)** for stateless, secure session handling. The passwords (like `password123`) are actually encrypted in the database using **Bcrypt hashing**, which is industry-standard. The frontend has a simulated "Payment Gateway" interface that allows partial payments and generates unique reference ID strings mimicking a real M-Pesa/Card API transaction.
+
+### 5. Graphical User Interfaces (GUI) (10 Marks)
+* **Requirement:** Interfaces for unregistered users, customers, admins, and branch managers.
+* **How we did it:**
+    * **Unregistered/Public:** The Landing page (`LandingPage.jsx`) and Registration page are fully public.
+    * **Customers:** Have a dedicated portal to view total dues, chart history, report leakages, and pay bills.
+    * **Administrator:** Has a dashboard to manage billing tiers dynamically, manage specific customers, and manually generate monthly bills.
+    * **Branch Manager:** Has a powerful visual dashboard with Pie charts, Bar charts, and Line graphs tracking the financial and physical operational health of the company.
+
+---
+
+### What you still need to do to secure the 100%
+
+While the code hits all the **technical** marks, your rubric contains a few items you still need to complete personally:
+
+1. **Host the app online (10 Marks):** You need to deploy the application. Because it is a full-stack App (React + Node + PostgreSQL), you can deploy the React frontend on **Vercel** or **Netlify**, the backend on **Render**, and use a free cloud Postgres database like **Supabase** or **Neon**. Let me know if you need help with this deployment phase!
+2. **Write the Report (25 Marks):** You must compile the Word document with the Problem Statement, Data Models (ERD diagram for the two databases), and technology justifications.
+    * *Pro-Tip for the report:* Justify **React (Vite)** by saying it allows for real-time state management and modern component-based architecture for a fluid UI. Justify **Node.js/Express** because its asynchronous event-driven architecture is perfect for simultaneously piping data across two separated distributed databases.
+3. **Prepare the Presentation (20 Marks Total):** Rehearse exactly how the tiered billing generation works and how the databases are split, as your lecturer will likely focus Questions & Answers on how the two databases talk to each other!
+
+**Does everything look good, or do you want to start preparing the project for online hosting/deployment?**
